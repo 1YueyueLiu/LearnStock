@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+<head>
+     <title>Stock</title>
+</head>
+
+<body>
+<h1>Stock says...</h1> <div>
+            Welcome to this application! <br />
+     <strong>{{ boldmessage }}</strong><br /> </div>
+<div>
+      <a href="/stock/about/">About</a><br />
+      <img src="{% static 'images/tesla.jpg' %}" alt="Picture of tesla"/>
+</div>
+ </body>
+</html>

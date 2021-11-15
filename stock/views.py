@@ -3,7 +3,9 @@ from django.http import HttpResponse
 
 # Create your views here.
 def index(request):
-    return HttpResponse(" Stock has the high return")
+
+    context_dict = {'boldmessage':'hi,julia'}
+    return render(request,'stock/index.html', context=context_dict)
 
 def about(request):
-    return HttpResponse("Stock says here is some information about this app")
+    return render(request,'stock/about.html')
