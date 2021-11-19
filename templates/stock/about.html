@@ -1,24 +1,20 @@
-<!DOCTYPE html>
-
+{% extends 'stock/base.html' %}
 {% load staticfiles %}
 
-<html>
+{% block title_block %}
+            About the Appliaction
+{% endblock  %}
+        
+    
 
-    <head>
-        <title>Stock</title>
-    </head>
-
-    <body>
+{% block body_block %}
         <h1>Stock says...</h1>
         <div>
             here is the about page. <br />
            
         </div>
-        <div>
+      
             <a href="/stock/">Index</a><br />
             <img src="{% static 'images/JP.jpg' %}" alt="Picture of JP" />
             <img src="{{ MEDIA_URL }}microsoft.jpg" alt="Picture of  microsoft" />
-        </div>
-    </body>
-
-</html>
+{% endblock %}
