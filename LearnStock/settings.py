@@ -29,7 +29,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-LOGIN_URL='rango:login'
+REGISTRATION_OPEN = True
+REGISTRATION_AUTO_LOGIN = True
+LOGIN_REDIRECT_URL = 'stock:index'
+LOGIN_URL='auth_login'
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -40,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'stock',
+    'registration',
 ]
 
 MIDDLEWARE = [

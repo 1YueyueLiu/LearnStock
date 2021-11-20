@@ -29,15 +29,17 @@ def index(request):
     #return render(request,'stock/index.html', context=context_dict)
 
 def about(request):
+    context_dict = {}
+    visitor_cookie_handler(request)
+    context_dict['visits']= request.session['visits']
     
-    print(request.method)
-    print(request.user)
+    #print(request.method)
+    #print(request.user)
+    #if request.session.test_cookie_worked():
+     #   print("TEST COOKIE WORKED!")
+      #  request.session.delete_test_cookie()
 
-    if request.session.test_cookie_worked():
-        print("TEST COOKIE WORKED!")
-        request.session.delete_test_cookie()
-
-    return render(request,'stock/about.html')
+    return render(request,'stock/about.html',context_dict)
 
 
 def show_category(request,category_name_slug):
@@ -55,7 +57,7 @@ def show_category(request,category_name_slug):
 
     return render(request,'stock/category.html',context=context_dict)
 
-
+@login_required
 def add_category(request):
     form = CategoryForm()
 
@@ -69,7 +71,7 @@ def add_category(request):
             print(form.errors)
     return render(request,'stock/add_category.html',{'form':form})
 
-
+@login_required
 def add_page(request,category_name_slug):
     try:
         category = Category.objects.get(slug=category_name_slug)
@@ -98,7 +100,7 @@ def add_page(request,category_name_slug):
     return render(request,'stock/add_page.html',context=context_dict)
 
 
-def register(request):
+#def register(request):
     registered = False
 
     if request.method == 'POST':
@@ -131,7 +133,7 @@ def register(request):
                        'profile_form':profile_form,
                        'registered':registered})
 
-def user_login(request):
+#def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -155,11 +157,15 @@ def restricted(request):
     return render(request,'stock/restricted.html')
 
 @login_required
-def user_logout(request):
-    logout(request)
-    return redirect(reverse('stock:index'))
+#def user_logout(request):
+ #   logout(request)
+  #  return redirect(reverse('stock:index'))
 
-
+def get_server_side_cookie(request,cookie,default_val=None):
+    val = request.session.get(cookie)
+    if not val:
+        val = default_val
+    return val
 
 def visitor_cookie_handler(request,response):
     visits = int(request.COOKIES.get('visits','1'))
