@@ -26,11 +26,16 @@
         <hr />
         <div>
             <ul>
+                {% if user.is_authenticated %}
                 <li><a href="{% url 'stock:add_category' %}">Add A New Category</a></li>
-                <li><a href="{% url 'stock:about' %}">About</a></li>
-                <li><a href="{% url 'stock:index' %}">Index</a></li>
+                <li><a href="{% url 'stock:restricted' %}">Restricted Page</a></li>        
+                <li><a href="{% url 'stock:logout' %}">Logout</a></li>
+                {% else %}
                 <li><a href="{% url 'stock:register' %}">Sign Up</a></li>
                 <li><a href="{% url 'stock:login' %}">Login</a></li>
+                {% endif %}
+                <li><a href="{% url 'stock:about' %}">About</a></li>
+                <li><a href="{% url 'stock:index' %}">Index</a></li>
             </ul>
         </div>
     </body>
