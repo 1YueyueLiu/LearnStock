@@ -1,48 +1,72 @@
-{% extends 'stock/base.html' %}
+{% extends 'stock/about1.html' %}
 {% load staticfiles %}
 
 {% block title_block %}
-          Homepage
+         
 {% endblock %}
+<header class="masthead" style="background-image: url('static/assets/img/about-bg.jpg')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="page-heading">
+                    <h1>LearnStock</h1>
+                    <span class="subheading">This is the best application for studying stock</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
 
 {% block body_block %}
-<h1>Stock says...</h1> 
-<div>
-     {% if user.is_authenticated %} 
-     Dear {{ user.username }}, Hi~
-     {% else %}    
-     Welcome to this application! 
-     {% endif %}
-     <br />
-</div>
-     <div>
-             <h2>Most Liked Stock Category News</h2>
-     {% if categories %}
-      <ul>
-         {% for category in categories %}
-          <li> 
-               <a href="/stock/category/{{ category.slug }}">{{category.name }}</a>
-          </li>
-         {% endfor %}
-      </ul>
-      {% else %}
-          <strong> There are no categories present.</strong>
-     {% endif %}
-      </div>
 
-      <div>
-           <h2>Most Viewed Stock News </h2>
-      {% if pages %}
-           <ul>
-               {% for page in pages %}
-                   <li><a href="{{ page.url }}">{{ page.title }}</a></li>
-               {% endfor %}
-           </ul>
-       {% else %} 
-                <strong>There are no pages present.</strong>  
-       {% endif %} 
-     </div>
-
-      <img src="{% static 'images/tesla.jpg' %}" alt="Picture of tesla"/>
+<main class="mb-4">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                
+                <h3 class="pb-3 mb-4 font-italic border-bottom">
+                    The Latest News In The Stock Market
+                   </h3>
+                   <img src="{% static 'images/index.jpg' %}" alt="Picture"/>
+                   <div class="blog-post">
+                    <h2 class="blog-post-title">Top 5 Most Liked Stock Category</h2>
+                    <div class="p-3">
+                         <h4 class="font-italic"></h4>
+                         
+                         <ol class="list-unstyled mb-0">
+                           
+                         </ol>
+                      {% if categories %}
+                       <ul>
+                      {% for category in categories %}
+                      <li> 
+                         <a href="/stock/category/{{ category.slug }}">{{category.name }}</a>
+                      </li>
+                   {% endfor %}
+                </ul>
+                {% else %}
+                    <strong> There are no categories present.</strong>
+               {% endif %}
+                </div>
+          
+                <div>
+                     <h2>Top 4 Most Viewed Stock News </h2>
+                {% if pages %}
+                     <ul>
+                         {% for page in pages %}
+                             <li><a href="{{ page.url }}">{{ page.title }}</a></li>
+                         {% endfor %}
+                     </ul>
+                 {% else %} 
+                          <strong>There are no pages present.</strong>  
+          
+                          
+                 {% endif %} 
+                
+            
+            </div>
+        </div>
+    </div>
+</main>
 {% endblock %}
  

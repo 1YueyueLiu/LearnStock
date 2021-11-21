@@ -1,23 +1,65 @@
-{% extends 'stock/base.html' %}
+{% extends 'stock/base2.html' %}
+
 {% load staticfiles %}
+
 
   {% block title_block %}
          Login
    {% endblock %}
 
+
+
 {% block body_block %}
-        <h1> Login to LearnStock</h1>
-        <form id="login_form" method="post" action=".">
+<style>
+.form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+}
+
+.form-signin .checkbox {
+  font-weight: 400;
+}
+
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
+
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+   </style>
+    
+   
+     <div style="text-align: center">
+      <main class="form-signin">
+        <h1> Login </h1>
+        
+        <form id="login_form" method="post" action="." >
            {% csrf_token %}
            {{ form.as_p }}
-        
-           
+           <div class="form-floating">
         <input type="submit" value="LOG IN" />
-        <input type="submit" name="next" value="{{ next }}" />
+           </div>
+         <div>
+        <input type="hidden" name="next" value="{{ next }}" />
+      </div>
        </form>
+     
 <p>
    Not registered?
          <a href="{% url 'registration_register' %}">Register here!</a> 
 </p>
-
+</div>
+</main>
+</div>
 {% endblock %}

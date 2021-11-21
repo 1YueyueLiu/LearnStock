@@ -29,9 +29,9 @@ def index(request):
     #return render(request,'stock/index.html', context=context_dict)
 
 def about(request):
-    context_dict = {}
-    visitor_cookie_handler(request)
-    context_dict['visits']= request.session['visits']
+    #context_dict = {}
+    #visitor_cookie_handler(request)
+    #context_dict['visits']= request.session['visits']
     
     #print(request.method)
     #print(request.user)
@@ -39,7 +39,7 @@ def about(request):
      #   print("TEST COOKIE WORKED!")
       #  request.session.delete_test_cookie()
 
-    return render(request,'stock/about.html',context_dict)
+    return render(request,'stock/about.html')
 
 
 def show_category(request,category_name_slug):

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+{% load stock_template_tags %}
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Stock</title>
+    <link rel="icon" type="image/x-icon" href="static/assets/favicon.ico" />
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="static/css/styles.css" rel="stylesheet" />
+ 
+    <title>LearnStock</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+    body {
+      margin: 0;
+    }
+    
+    .header {
+      background-color: #e5e8eb;
+      padding: 30px;
+      text-align: center;
+    }
+    .topnav {
+      overflow: hidden;
+      background-color: rgb(36, 32, 37);
+    }
+    .topnav a {
+      float: right;
+      display: block;
+      color: #f2f2f2;
+      text-align: center;
+      padding: 25px 20px;
+      text-decoration: none;
+    }
+    .topnav a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+ 
+  
+
+    
+    </style>
+
+    </head>
+
+    <body>
+    
+    <div class="header">
+      <h1>LearnStock</h1>
+
+    </div>
+
+    
+    <div class="topnav">
+     
+      <a href="{% url 'index' %}">Home</a>
+        <a href="{% url 'stock:about' %}">About</a>
+      {% if user.is_authenticated %}
+      <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'auth_logout' %}?next={% url 'index'%}">Logout</a></li>
+        
+      {% else %}
+        <a href="{% url 'registration_register' %}">Sign Up</a>
+        <a href="{% url 'auth_login' %}">Login</a>
+      {% endif %}
+        
+</div>
+
+<div>
+    {% block body_block %}
+    {% endblock %}
+
+</div>
+
+
+</body>
+</html>
+
