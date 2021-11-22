@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models.fields import SlugField
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
+from datetime import datetime
 
 # Create your models here.
 class Category(models.Model):
@@ -39,3 +40,9 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.username
         
+class Comment(models.Model):
+    #category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    username = models.CharField(max_length=12)
+    content = models.CharField(max_length=128)
+    posttime = models.DateTimeField(default = datetime.now())
+    category = models.SlugField()

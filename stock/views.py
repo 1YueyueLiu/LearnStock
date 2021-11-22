@@ -11,7 +11,10 @@ from django.contrib.auth import authenticate,login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from datetime import datetime
-
+from django.contrib.auth.models import User 
+from stock.models import UserProfile
+from django.utils.decorators import method_decorator
+from django.views import View
 
 
 # Create your views here.
@@ -47,7 +50,7 @@ def show_category(request,category_name_slug):
 
     try:
         category = Category.objects.get(slug=category_name_slug)
-        pages = Page.objects.filter(category=category)
+        pages = Page.objects.filter(category=category).order_by('-views')
 
         context_dict['pages']=pages
         context_dict['category']=category
@@ -178,3 +181,128 @@ def visitor_cookie_handler(request,response):
     else:
         response.set_cookie('last_visit',last_visit_cookie)
     response.set_cookie('visits',visits)
+
+
+def goto_url(request):
+    if request.method == 'GET':
+            page_id = request.GET.get('page_id')
+
+            try:
+                selected_page = Page.objects.get(id=page_id)
+            except Page.DoesNotExist:
+                return redirect(reverse('rango:index'))
+
+            selected_page.views = selected_page.views + 1
+            selected_page.save()
+            
+
+            return redirect(selected_page.url)
+          
+    return redirect(reverse('rango:index'))
+
+
+@login_required
+def register_profile(request):
+    form = UserProfileForm()
+
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST,request.FILES)
+        if form.is_valid():
+            user_profile = form.save(commit=False)
+            user_profile.user = request.user
+            user_profile.save()
+
+            return redirect(reverse('index'))
+        else:
+            print(form.errors)
+    context_dict={'forms':form}
+
+    return render(request,'stock/profile_registration.html',context_dict)
+
+
+def News(request):
+    category_list=Category.objects.order_by('-likes')
+    page_list=Page.objects.order_by('-views')
+    context_dict={}
+    #context_dict['boldmessage']:' hi, julia '
+    context_dict['categories']=category_list
+    context_dict['pages']=page_list
+
+    
+    return render(request,'stock/News.html',context=context_dict)
+
+      
+
+
+  
+
+#class AboutView(View):
+    def get(self,request):
+        context_dict={}
+
+        visitor_cookie_handler(request)
+        context_dict['visits']=request.session['visits']
+
+        return render(request,'stock/about.html',context_dict)
+
+#class ProfileView(View):
+    def get_user_details(self, username):
+        try:
+           user = User.objects.get(username=username)
+        except User.DoesNotExist: 
+            return None
+
+        user_profile = UserProfile.objects.get_or_create(user=user)[0]
+        form = UserProfileForm({'website': user_profile.website,
+                                'picture': user_profile.picture}) 
+        return (user, user_profile, form)
+
+    @method_decorator(login_required) 
+    def get(self, request, username):
+        try:
+            (user, user_profile, form) = self.get_user_details(username)
+        except TypeError:
+            return redirect(reverse('stock:index'))
+        
+        context_dict = {'user_profile': user_profile,
+                        'selected_user': user,
+                        'form': form}
+
+        return render(request, 'stock/profile.html', context_dict)
+
+    @method_decorator(login_required) 
+    def post(self, request, username):
+       try:
+        (user, user_profile, form) = self.get_user_details(username)
+       except TypeError:
+        return redirect(reverse('stock:index'))
+       form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
+
+       if form.is_valid():
+        form.save(commit=True)
+        return redirect('stock:profile', user.username)
+       else: 
+        print(form.errors)
+        context_dict = {'user_profile': user_profile,
+                        'selected_user': user,
+                        'form': form}
+        return render(request, 'stock/profile.html', context_dict)
+
+
+
+#class AddCategoryView(View): 
+    @method_decorator(login_required) 
+    def get(self, request):
+        form = CategoryForm()
+        return render(request, 'stock/add_category.html', {'form': form})
+
+    @method_decorator(login_required) 
+    def post(self, request):
+        form = CategoryForm(request.POST)
+
+        if form.is_valid():
+           form.save(commit=True)
+           return redirect(reverse('stock:index'))
+        else: 
+            print(form.errors)
+        return render(request, 'stock/add_category.html', {'form': form})

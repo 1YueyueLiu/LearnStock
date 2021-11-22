@@ -1,0 +1,23 @@
+{%extends 'stock/base2.html'%} 
+{%load staticfiles%}
+
+{% block title_block %} 
+      Register - Step 2
+{% endblock %}
+
+{% block body_block %} 
+
+   
+<h1 class>Register Here - Step 2</h1> 
+    
+
+
+<div class> 
+   
+<form method="post"  action="{% url 'stock:register_profile' %}" enctype="multipart/form-data">
+       {% csrf_token %}
+       {{ form.as_p }}
+<input type="submit" value="Create Profile" />
+</form> 
+</div> 
+{% endblock %}

@@ -1,4 +1,4 @@
-{% extends 'stock/base.html' %}
+{% extends 'stock/base2.html' %}
 {% load staticfiles %}
 
 {% block title_block %}
@@ -15,7 +15,11 @@
                {% if pages %}
                    <ul>
                        {% for page in pages %}
-                          <li><a href="{{ page.url }}">{{ page.title }}</a> </li>
+                          <li><a href="{% url 'stock:goto' %}?page_id={{ page.id }}">{{ page.title }}</a>
+                          {% if page.views > 1 %}
+                                {{page.view }}
+                        </li>
+                        {% endif %}
                        {% endfor %}
                     </ul>
                 {% else %}
@@ -28,4 +32,7 @@
                 {% else %}
                  The specified category does not exist.
             {% endif %}
+
+          
   {% endblock %}
+    <!--comments,model form>

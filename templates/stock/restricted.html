@@ -1,11 +1,96 @@
-{% extends 'stock/base.html' %}
-{% load staticfiles %}
+{%extends 'stock/base2.html'%} 
+{%load staticfiles%}
+<style>
+.grid {
+
+display: table;
+
+border-spacing: 4px;
+
+}
+
+.row {
+
+display: table-row;
+
+}
+
+.image {
+
+display: table-cell;
+
+width: 240px;
+
+background-color: #000;
+
+border: 8px solid #000;
+
+vertical-align: top;
+
+text-align: center;
+
+}
+
+.image p {
+
+color: #fff;
+
+font-size: 85%;
+
+text-align: left;
+
+padding-top: 8px;
+
+}
+</style>
 
 {% block title_block %}
-        Restricted Page
+     <h1> Simulator  </h1>
 {% endblock %}
 
-{% block body_block %}
-<h1>Restricted Page</h1>
-Since you are logged in, you can see this text<br/>
+
+        
+      
+{% block body_block  %}
+<div style="text-align: center; width: 500px;height:200px; display: table;border: green solid 1px;">  
+        
+ <span style="display: table-cell; vertical-align: middle; ">
+        
+        <img src="{{ MEDIA_URL }}APPLE.jpg" alt="Stock of APPLE" style="display: inline-block;"/>
+        
+ </span>
+         
+        </div>
+
+        <div style="text-align: center; width: 1400px; border: rgb(127, 193, 219) solid 5px;">
+                   
+        <h1>What we should know before buy a stock</h1> 
+        </div>
+        <div style="width: 1200px; border: rgb(127, 193, 219) solid 5px;">
+       <h2>Step 1： Read stock trading chart</h2>
+       <li><h4> 1:  The company name  that the stock belonging to </h4></li> 
+       <li><h4> 2:  Real-time price of each share </h4> </li> 
+       <li><h4> 3:  A stock's volume refers to the number of shares that are sold, or traded, over a certain period of time (usually daily) </h4> </li> 
+       <li><h4> 4:  The highest price at which the security has traded during the current trading day. </h4> </li> 
+       <li><h4> 5:  The lowest price that a security has traded at during the day</h4> </li> 
+       <li><h4> 6:  The total dollar market value of a company's outstanding shares of stock </h4> </li> 
+       <li><h4> 7 & 9: The 52-week high/low is the highest and lowest price at which a security has traded
+        during the time period that equates to one year and is viewed as a technical indicator. The 52-week 
+        high/low is based on the daily closing price for the security. </h4> </li> 
+       <li><h4> 8:  The bid price refers to the highest price a buyer will pay for a security. The ask price refers to the lowest price a seller will accept for a security. The difference between these two prices is known as the spread; the smaller the spread, the greater the liquidity of the given security. </h4> </li> 
+       <li><h4> 10: Stock trend chart for one year.You can more intuitively see the price trend of this stock in the past year and judge the reasonable fluctuation range of this st</h4> </li> 
+</div>
+       <div style="width: 1200px; border: rgb(70, 158, 192) solid 5px;">
+        <h2>Step 2：Some terms about buying and selling stock</h2>
+        <li><h4> 1.Terms of action：  </h4></li> 
+                <li>  <h4> buy：</h4></li> 
+                        <li> <h4>  sell：</h4></li> 
+                   <li>  <h4>  short：</h4></li> 
+                        <li><h4>  buy to cover： </h4></li> 
+       </div>
+        
+        
+        
+
+
 {% endblock %}

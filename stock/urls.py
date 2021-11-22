@@ -1,6 +1,7 @@
 from django.urls import path
 from stock import views
 
+
 app_name ='stock'
 
 urlpatterns = [
@@ -14,5 +15,10 @@ urlpatterns = [
     #path('login/',views.user_login, name='login'),
     path('restricted/',views.restricted,name='restricted'),
     #path('logout/',views.user_logout,name='logout'),
+    path('goto/',views.goto_url, name='goto'),
+    path('register_profile/',views.register_profile,name='register_profile'),
+    path('News',views.News,name='News'),
+   
+   
     
 ]

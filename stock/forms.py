@@ -1,6 +1,7 @@
 from django import forms
 from stock.models import Page,Category, UserProfile
 from django.contrib.auth.models import User
+from stock.models import Comment
 
 class CategoryForm(forms.ModelForm):
     name = forms.CharField(max_length=128,
@@ -42,6 +43,17 @@ class UserForm(forms.ModelForm):
         fields = ('username','email','password')
 
 class UserProfileForm(forms.ModelForm):
+    website = forms.URLField(required=False)
+    picture = forms.ImageField(required=False)
+    
     class Meta:
         model = UserProfile
         fields = ('website','picture',)
+
+class CommentForm(forms.ModelForm):
+    content = forms.CharField(max_length=500)
+    class Meta:
+        model = Comment
+        fields = ('content',)
+
+

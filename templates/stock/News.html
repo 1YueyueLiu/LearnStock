@@ -1,0 +1,30 @@
+{%extends 'stock/base2.html'%} 
+{%load staticfiles%}
+
+
+{%  block body_block %}
+
+{% if categories %}
+    {% for c in categories %}
+        {% if c == current_category %}
+        <div sytle= "text-align: center">
+            <li class="nav-item">
+            <a class="nav-link active" href="{% url 'stock:show_category' c.slug %}">
+                <span data-feather="archive"></span>{{ c.name }}
+            </a>
+            </li>
+        </div>
+        {% else %}
+            <li class="nav-item">
+            <a class="nav-link" href="{% url 'stock:show_category' c.slug %}">
+                <span data-feather="archive"></span>{{ c.name }}
+            </a>
+            </li>
+        {% endif %}
+    {% endfor %}
+{% else %}
+    <li class="nav-item">There are no categories present.</li>
+{% endif %}
+
+
+{% endblock %}
