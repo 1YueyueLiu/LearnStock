@@ -2,11 +2,11 @@ from django.core.exceptions import NON_FIELD_ERRORS
 from django.shortcuts import render
 from django.http import HttpResponse
 from stock.models import Category
-from stock.models import Page
+from stock.models import Page,Comment
 from stock.forms import CategoryForm, PageForm
 from django.shortcuts import redirect
 from django.urls import reverse
-from stock.forms import UserForm, UserProfileForm
+from stock.forms import UserForm, UserProfileForm,CommentForm
 from django.contrib.auth import authenticate,login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
@@ -47,18 +47,30 @@ def about(request):
 
 def show_category(request,category_name_slug):
     context_dict={}
+    
 
     try:
         category = Category.objects.get(slug=category_name_slug)
-        pages = Page.objects.filter(category=category).order_by('-views')
+        pages = Page.objects.filter(category=category)
 
         context_dict['pages']=pages
         context_dict['category']=category
     except Category.DoesNotExist:
         context_dict['pages']=None
         context_dict['category']=None
+    form = CommentForm()
+    context_dict['form']=form
+        
+    
 
+    try:
+        comment = Comment.objects.filter(category=category_name_slug).order_by('-posttime')[:6]
+        context_dict['comments'] = comment
+    except Comment.DoesNotExist:
+        context_dict['comments'] = None
+    
     return render(request,'stock/category.html',context=context_dict)
+
 
 @login_required
 def add_category(request):
@@ -233,6 +245,21 @@ def News(request):
 
       
 
+def add_comment(request, category_name_slug):
+    form = CommentForm(request.POST)
+    if form.is_valid() and form['content'] != None:
+        f = form.save(commit=False)
+        f.username = get_server_side_cookie(request, 'username', 'Anonym')
+        f.username = request.user.username # temporary solution for comment username
+        f.posttime = datetime.now()
+        f.category = category_name_slug
+        f.save()
+
+        # for redirect back to single_category
+        return redirect(f'/stock/category/{category_name_slug}')
+    else:
+        print(form.errors)
+
 
   
 
@@ -306,3 +333,31 @@ def News(request):
         else: 
             print(form.errors)
         return render(request, 'stock/add_category.html', {'form': form})
+
+
+
+
+#def single_category(request,category_name_slug):
+    context_dict = {}
+    
+
+    form = CommentForm()
+    try:
+        category = Category.objects.get(slug=category_name_slug)
+        pages = Page.objects.filter(category=category)
+        context_dict['pages'] = pages
+        context_dict['category'] = category
+    except Category.DoesNotExist:
+        context_dict['category'] = None
+        context_dict['pages'] = None
+        context_dict['form'] = form
+
+    if request.method == 'POST':
+        add_comment(request, category_name_slug)
+    
+    try:
+        comment = Comment.objects.filter(category=category_name_slug).order_by('-posttime')[:6]
+        context_dict['comments'] = comment
+    except Comment.DoesNotExist:
+        context_dict['comments'] = None
+    return render(request, 'stock/single_category.html', context_dict)

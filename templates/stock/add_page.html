@@ -1,4 +1,4 @@
-{% extends 'stock/base.html' %}
+{% extends 'stock/base2.html' %}
 {% load staticfiles %}
 
 {% block title_block %}
@@ -6,8 +6,9 @@
 {% endblock  %}
    
 {% block body_block %}
+<div style="text-align: center;">
         <h1>Add a Stock Page to {{ category.name }}</h1>
-        <div>
+       
             <form id="add_page_form" method="post" action="/stock/category/{{ category.slug }}/add_page/">
             {% csrf_token %}
             {% for hidden in form.hidden_fields %}

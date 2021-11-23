@@ -18,6 +18,7 @@ urlpatterns = [
     path('goto/',views.goto_url, name='goto'),
     path('register_profile/',views.register_profile,name='register_profile'),
     path('News',views.News,name='News'),
+    path('add_comment/<slug:category_name_slug>/', views.add_comment, name='add_comment'),
    
    
     

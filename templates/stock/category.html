@@ -10,29 +10,72 @@
 {% endblock %}
 
 {% block body_block %}
+<div style="text-align: center; width: 1350px; border: rgb(127, 193, 219) solid 5px;">
       {% if category %}
                <h1>{{ category.name }}</h1>
+            </div>
+            <div style="background-color: beige;">
                {% if pages %}
-                   <ul>
+                   <ul >
                        {% for page in pages %}
-                          <li><a href="{% url 'stock:goto' %}?page_id={{ page.id }}">{{ page.title }}</a>
+                         <h3> <li><a href="{% url 'stock:goto' %}?page_id={{ page.id }}">{{ page.title }}</a>
                           {% if page.views > 1 %}
                                 {{page.view }}
-                        </li>
+                        </li></h3>
                         {% endif %}
                        {% endfor %}
                     </ul>
                 {% else %}
                     <strong>No pages currently in category.</strong>
                 {% endif %}
-
+           
                 {% if user.is_authenticated %}
-                <a href="/stock/category.slug }}/add_page/">Add Page</a> <br />
+                 <a href="{% url 'stock:add_page' category.slug %}"><div style="text-align: center"><h3>Add Own Material Page</h3></div></a> <br />
                 {% endif %}
                 {% else %}
                  The specified category does not exist.
             {% endif %}
+                </div>
+<!----comments-->
 
-          
+            <div style=" background:bisque; width: 1350px; border: rgb(127, 193, 219) solid 5px;">
+                <h3 class=>Comment Area</h3>
+                <div class=>
+                    <!-- comment area -->
+                    {% if comments %}
+                        {% for comment in comments %}
+                            <div style="background-color: rgb(212, 212, 165);"class="media" id="comment-post">
+                               <!--img id="comment-profile" class="mr-3" src="{% static 'images/profile.jpg' %}" alt="Generic placeholder image"-->
+                                <div>
+                                        <div class>
+                                            {{ comment.username }}  @ {{ comment.posttime }}
+                                        </div>
+                                   <h4> {{ comment.content }}</h4>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>There are not comments post currently.</p>
+                    {% endif %}
+                  
+                    <!-- comment button -->
+                    {% if user.is_authenticated %}
+                    <form id="comment_form" method="post" action="{% url 'stock:add_comment' category.slug %}">
+                        {% csrf_token %}
+            
+                        {% for hidden in form.hidden_fields %}
+                            {{ hidden }}
+                        {% endfor %}
+            
+                        {% for field in form.visible_fields %}
+                            {{ field.errors }}
+                            {{ field.help_text }}
+                            {{ field }}
+                        {% endfor %}
+                        <input type="submit" name="submit" value="Add Comment" class="btn btn-primary" />
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
   {% endblock %}
     <!--comments,model form>
