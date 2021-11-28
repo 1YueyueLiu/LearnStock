@@ -1,6 +1,7 @@
 from django.core.exceptions import NON_FIELD_ERRORS
 from django.shortcuts import render
 from django.http import HttpResponse
+from stock.bing_search import run_query
 from stock.models import Category
 from stock.models import Page,Comment
 from stock.forms import CategoryForm, PageForm
@@ -18,6 +19,26 @@ from django.views import View
 
 
 # Create your views here.
+
+def get_server_side_cookie(request, cookie, default_val=None):
+    val = request.session.get(cookie)
+    if not val:
+        val = default_val
+    return val
+
+def visitor_cookie_handler(request):
+    visits = int(get_server_side_cookie(request,'visits','1'))
+    last_visit_cookie = get_server_side_cookie(request,'last_visit',str(datetime.now()))
+    last_visit_time = datetime.strptime(last_visit_cookie[:-7],'%Y-%m-%d %H:%M:%S')
+
+    if(datetime.now() - last_visit_time).days > 0 :
+        visits= visits+1
+        request.session['last_visit']=str(datetime.now())
+    else:
+        request.session['last_visit']=last_visit_cookie
+    request.session['visits'] =visits
+
+
 def index(request):
     category_list=Category.objects.order_by('-likes')[:5]
     page_list=Page.objects.order_by('-views')[:4]
@@ -25,9 +46,12 @@ def index(request):
     #context_dict['boldmessage']:' hi, julia '
     context_dict['categories']=category_list
     context_dict['pages']=page_list
+    
+    visitor_cookie_handler(request)
+    context_dict['visits']=request.session['visits']
 
-    response = render(request,'stock/index.html',context_dict)
-    visitor_cookie_handler(request,response)
+    response = render(request,'stock/index.html',context=context_dict)
+    
     return response
     #return render(request,'stock/index.html', context=context_dict)
 
@@ -80,8 +104,13 @@ def add_category(request):
         form = CategoryForm(request.POST)
 
         if form.is_valid():
-            form.save(commit=True)
-            return redirect('/stock/')
+            this_category=form.save(commit=True)
+            this_category.views=0
+            this_category.likes=0
+            this_category.save()
+            print(this_category)
+
+            return redirect('stock/category.html')
         else:
             print(form.errors)
     return render(request,'stock/add_category.html',{'form':form})
@@ -94,7 +123,7 @@ def add_page(request,category_name_slug):
         category = None
 
     if category is None:
-        return redirect('/stock/')
+        return redirect('/index/')
 
     form = PageForm()
     
@@ -157,7 +186,7 @@ def add_page(request,category_name_slug):
         if user:
             if user.is_active:
                 login(request,user)
-                return redirect(reverse('stock:index'))
+                return redirect(reverse('index'))
             else:
                 return HttpResponse("Your account is disabled.")
         else:
@@ -176,23 +205,8 @@ def restricted(request):
  #   logout(request)
   #  return redirect(reverse('stock:index'))
 
-def get_server_side_cookie(request,cookie,default_val=None):
-    val = request.session.get(cookie)
-    if not val:
-        val = default_val
-    return val
 
-def visitor_cookie_handler(request,response):
-    visits = int(request.COOKIES.get('visits','1'))
-    last_visit_cookie = request.COOKIES.get('last_visits',str(datetime.now()))
-    last_visit_time = datetime.strptime(last_visit_cookie[:-7],'%Y-%m-%d %H:%M:%S')
 
-    if(datetime.now() - last_visit_time).days > 0 :
-        visits= visits+1
-        response.set_cookie('last_visit',str(datetime.now()))
-    else:
-        response.set_cookie('last_visit',last_visit_cookie)
-    response.set_cookie('visits',visits)
 
 
 def goto_url(request):
@@ -202,7 +216,7 @@ def goto_url(request):
             try:
                 selected_page = Page.objects.get(id=page_id)
             except Page.DoesNotExist:
-                return redirect(reverse('rango:index'))
+                return redirect(reverse('stock:index'))
 
             selected_page.views = selected_page.views + 1
             selected_page.save()
@@ -210,7 +224,7 @@ def goto_url(request):
 
             return redirect(selected_page.url)
           
-    return redirect(reverse('rango:index'))
+    return redirect(reverse('stock:index'))
 
 
 @login_required
@@ -337,27 +351,27 @@ def add_comment(request, category_name_slug):
 
 
 
-#def single_category(request,category_name_slug):
-    context_dict = {}
-    
+def search(request):
+    result_list=[]
+    query = ''
+    if request.method =='POST':
+        query = request.POST['query'].strip()
 
-    form = CommentForm()
-    try:
-        category = Category.objects.get(slug=category_name_slug)
-        pages = Page.objects.filter(category=category)
-        context_dict['pages'] = pages
-        context_dict['category'] = category
-    except Category.DoesNotExist:
-        context_dict['category'] = None
-        context_dict['pages'] = None
-        context_dict['form'] = form
-
-    if request.method == 'POST':
-        add_comment(request, category_name_slug)
+        if query:
+            result_list= run_query(query)
+    return render(request,'stock/search.html',{'result_list':result_list})  
     
-    try:
-        comment = Comment.objects.filter(category=category_name_slug).order_by('-posttime')[:6]
-        context_dict['comments'] = comment
-    except Comment.DoesNotExist:
-        context_dict['comments'] = None
-    return render(request, 'stock/single_category.html', context_dict)
+class LikeCategoryView(View):
+    @method_decorator(login_required)
+    def get(self, request):
+        category_id = request.GET['category_id']
+        try:
+            category = Category.objects.get(id=int(category_id))
+        except Category.DoesNotExist:
+            return HttpResponse(-1)
+        except ValueError:
+            return HttpResponse(-1)
+        category.likes = category.likes + 1
+        category.save()
+        return HttpResponse(category.likes)
+        

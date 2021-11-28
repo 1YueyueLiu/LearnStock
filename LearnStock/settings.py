@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 
 REGISTRATION_OPEN = True
 REGISTRATION_AUTO_LOGIN = True
-LOGIN_REDIRECT_URL = 'stock:index'
+LOGIN_REDIRECT_URL = 'index'
 LOGIN_URL='auth_login'
 
 # Application definition

@@ -5,7 +5,7 @@ from stock import views
 app_name ='stock'
 
 urlpatterns = [
-    path('',views.index,name='index'),
+    path('stock/',views.index,name='index'),
     path('about/',views.about,name='about'),
     path('category/<slug:category_name_slug>/',
          views.show_category, name='show_category'),
@@ -19,7 +19,8 @@ urlpatterns = [
     path('register_profile/',views.register_profile,name='register_profile'),
     path('News',views.News,name='News'),
     path('add_comment/<slug:category_name_slug>/', views.add_comment, name='add_comment'),
-   
+    path('search',views.search,name='search'),
+    path('like_category/', views.LikeCategoryView.as_view(), name='like_category'),
    
     
 ]
