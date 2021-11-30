@@ -9,11 +9,11 @@ FAILURE_FOOTER = f"{os.linesep}"
 
 f"{FAILURE_HEADER} {FAILURE_FOOTER}"
 class HomepageViewTests(TestCase):
-        def test_home_view_with_no_pages(self):
+        def test_homepageview_with_no_pages(self):
             """
       if there is no pages on the homepage，we will see a statement
             """
-            response = self.client.get(reverse('index'))
+            response = self.client.get(reverse('stock:index'))
             self.assertEqual(response.status_code, 200)
             self.assertContains(response, "There are no News post currently.")
             self.assertQuerysetEqual(response.context['pages'], [])
