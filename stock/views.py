@@ -20,6 +20,7 @@ from django.views import View
 
 # Create your views here.
 
+# the view of cookie
 def get_server_side_cookie(request, cookie, default_val=None):
     val = request.session.get(cookie)
     if not val:
@@ -38,7 +39,7 @@ def visitor_cookie_handler(request):
         request.session['last_visit']=last_visit_cookie
     request.session['visits'] =visits
 
-
+# the view of homepage
 def index(request):
     category_list=Category.objects.order_by('-likes')[:5]
     page_list=Page.objects.order_by('-views')[:4]
@@ -53,7 +54,7 @@ def index(request):
     response = render(request,'stock/index.html',context=context_dict)
     
     return response
-    #return render(request,'stock/index.html', context=context_dict)
+    
 
 def about(request):
     #context_dict = {}
@@ -69,10 +70,10 @@ def about(request):
     return render(request,'stock/about.html')
 
 
+# the view of show the category
 def show_category(request,category_name_slug):
     context_dict={}
     
-
     try:
         category = Category.objects.get(slug=category_name_slug)
         pages = Page.objects.filter(category=category)
@@ -86,7 +87,6 @@ def show_category(request,category_name_slug):
     context_dict['form']=form
         
     
-
     try:
         comment = Comment.objects.filter(category=category_name_slug).order_by('-posttime')[:6]
         context_dict['comments'] = comment
@@ -95,7 +95,7 @@ def show_category(request,category_name_slug):
     
     return render(request,'stock/category.html',context=context_dict)
 
-
+# the view of function add new category
 @login_required
 def add_category(request):
     form = CategoryForm()
@@ -110,11 +110,12 @@ def add_category(request):
             this_category.save()
             print(this_category)
 
-            return redirect('stock/category.html')
+            return redirect('stock:News')
         else:
             print(form.errors)
     return render(request,'stock/add_category.html',{'form':form})
 
+# the view of function add new page
 @login_required
 def add_page(request,category_name_slug):
     try:
@@ -195,7 +196,7 @@ def add_page(request,category_name_slug):
     else:
         return render(request,'stock/login.html')
 
-
+# the view of simuilator page, has a login required
 @login_required
 def restricted(request):
     return render(request,'stock/restricted.html')
@@ -245,7 +246,7 @@ def register_profile(request):
 
     return render(request,'stock/profile_registration.html',context_dict)
 
-
+# the view of news page
 def News(request):
     category_list=Category.objects.order_by('-likes')
     page_list=Page.objects.order_by('-views')
@@ -258,7 +259,7 @@ def News(request):
     return render(request,'stock/News.html',context=context_dict)
 
       
-
+# the view of add comment
 def add_comment(request, category_name_slug):
     form = CommentForm(request.POST)
     if form.is_valid() and form['content'] != None:
@@ -269,7 +270,7 @@ def add_comment(request, category_name_slug):
         f.category = category_name_slug
         f.save()
 
-        # for redirect back to single_category
+        # for redirect back to the page after refresh
         return redirect(f'/stock/category/{category_name_slug}')
     else:
         print(form.errors)
@@ -285,6 +286,7 @@ def add_comment(request, category_name_slug):
         context_dict['visits']=request.session['visits']
 
         return render(request,'stock/about.html',context_dict)
+
 
 #class ProfileView(View):
     def get_user_details(self, username):
@@ -331,26 +333,7 @@ def add_comment(request, category_name_slug):
 
 
 
-#class AddCategoryView(View): 
-    @method_decorator(login_required) 
-    def get(self, request):
-        form = CategoryForm()
-        return render(request, 'stock/add_category.html', {'form': form})
-
-    @method_decorator(login_required) 
-    def post(self, request):
-        form = CategoryForm(request.POST)
-
-        if form.is_valid():
-           form.save(commit=True)
-           return redirect(reverse('stock:index'))
-        else: 
-            print(form.errors)
-        return render(request, 'stock/add_category.html', {'form': form})
-
-
-
-
+# the view of function search
 def search(request):
     result_list=[]
     query = ''
@@ -360,6 +343,7 @@ def search(request):
         if query:
             result_list= run_query(query)
     return render(request,'stock/search.html',{'result_list':result_list})  
+    
     
 class LikeCategoryView(View):
     @method_decorator(login_required)

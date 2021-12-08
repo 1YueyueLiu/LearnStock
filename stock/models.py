@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from datetime import datetime
 
 # Create your models here.
+# category model
 class Category(models.Model):
     name = models.CharField(max_length=128,unique=True)
     views = models.IntegerField(default=0)
@@ -22,6 +23,7 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+# page model
 class Page(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     title = models.CharField(max_length=128)
@@ -31,7 +33,7 @@ class Page(models.Model):
     def __str__(self):
         return self.title
 
-
+# userprofile model
 class UserProfile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     website = models.URLField(blank=True)
@@ -39,7 +41,8 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username
-        
+
+# comment model     
 class Comment(models.Model):
     #category = models.ForeignKey(Category, on_delete=models.CASCADE)
     username = models.CharField(max_length=12)

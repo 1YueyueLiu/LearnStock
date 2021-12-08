@@ -3,6 +3,7 @@ from stock.models import Page,Category, UserProfile
 from django.contrib.auth.models import User
 from stock.models import Comment
 
+# the form for category
 class CategoryForm(forms.ModelForm):
     name = forms.CharField(max_length=128,
                            help_text=" please enter the category name")
@@ -14,6 +15,7 @@ class CategoryForm(forms.ModelForm):
         model= Category
         fields=('name',)
 
+# the form for page
 class PageForm(forms.ModelForm):
     title = forms.CharField(max_length=128,
                             help_text="please enter the title of page.")
@@ -35,6 +37,7 @@ class PageForm(forms.ModelForm):
 
         return cleaned_data
 
+# the form for user
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
 
@@ -42,6 +45,7 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ('username','email','password')
 
+# the form for userprofile
 class UserProfileForm(forms.ModelForm):
     website = forms.URLField(required=False)
     picture = forms.ImageField(required=False)
@@ -50,6 +54,7 @@ class UserProfileForm(forms.ModelForm):
         model = UserProfile
         fields = ('website','picture',)
 
+# the form for comment
 class CommentForm(forms.ModelForm):
     content = forms.CharField(max_length=500)
     class Meta:
