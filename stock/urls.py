@@ -21,4 +21,5 @@ urlpatterns = [
     path('add_comment/<slug:category_name_slug>/', views.add_comment, name='add_comment'),
     path('search',views.search,name='search'),
     path('like_category/', views.LikeCategoryView.as_view(), name='like_category'),
+    path('profile/<username>/', views.ProfileView.as_view(), name='profile'),
 ]

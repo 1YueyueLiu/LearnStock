@@ -1,0 +1,22 @@
+{%extends 'stock/base2.html'%} 
+{% load staticfiles %}
+
+
+
+{% block title_block %}
+        Stock
+        {% endblock %}
+
+    {%  block body_block %}
+        Stock says...
+        <div>
+            here is the about page. <br />
+
+        </div>
+        <div>
+          
+            <img src="{% static 'images/JP.jpg' %}" alt="Picture of JP" />
+            <img src="{{ MEDIA_URL }}microsoft.jpg" alt="Picture of  microsoft" />
+        </div>
+        {% endblock %}
+

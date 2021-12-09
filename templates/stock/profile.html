@@ -10,23 +10,25 @@
 </div>
 
 
-    <div >
+    <div class="container">
 <img src="{{ MEDIA_URL }}{{ user_profile.picture }}" width="300"
              height="300"
-alt="{{ selected_user.username }}'s profile image" /> <br />
+alt="{{ selected_user.username }}'s profile image" /> 
+<br />
 <div>
-{% if selected_user == user %}
+      {% if selected_user == user %}
 <form method="post" action="." enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form.as_p }}
+
 <input type="submit" value="Update" /> 
 </form>
 {% else %} 
 <p>
     <strong>Website:</strong>
-<a href="{{ user_profile.website }}">{{ user_profile.website }}</a> </p>
-{% endif %} 
+       <a href="{{ user_profile.website }}">{{ user_profile.website }}</a> </p>
+                    {% endif %} 
 
-</div> 
+   </div> 
 </div>
 {% endblock %}

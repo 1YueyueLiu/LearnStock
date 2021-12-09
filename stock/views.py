@@ -243,7 +243,6 @@ def register_profile(request):
         else:
             print(form.errors)
     context_dict={'forms':form}
-
     return render(request,'stock/profile_registration.html',context_dict)
 
 # the view of news page
@@ -288,7 +287,7 @@ def add_comment(request, category_name_slug):
         return render(request,'stock/about.html',context_dict)
 
 
-#class ProfileView(View):
+class ProfileView(View):
     def get_user_details(self, username):
         try:
            user = User.objects.get(username=username)
@@ -359,3 +358,4 @@ class LikeCategoryView(View):
         category.save()
         return HttpResponse(category.likes)
         
+
