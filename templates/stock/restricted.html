@@ -1,100 +1,72 @@
 {%extends 'stock/base2.html'%} 
 {%load staticfiles%}
 <style>
-.grid {
+       .grid { 
+              display: table;
+              border-spacing: 4px;
+               }
+       .row {
+              display: table-row;  
+               }
 
-display: table;
-
-border-spacing: 4px;
-
-}
-
-.row {
-
-display: table-row;
-
-}
-
-.image {
-
-display: table-cell;
-
-width: 240px;
-
-background-color: #000;
-
-border: 8px solid #000;
-
-vertical-align: top;
-
-text-align: center;
-
-}
-
-.image p {
-
-color: #fff;
-
-font-size: 85%;
-
-text-align: left;
-
-padding-top: 8px;
-
-}
+       .image {
+              display: table-cell; 
+              width: 240px;
+              background-color: #000;
+              border: 8px solid #000;
+              vertical-align: top;
+              text-align: center;
+               }
+       .image p {
+              color: #fff;
+              font-size: 85%;
+              text-align: left;
+              padding-top: 8px;
+               }
 </style>
 
+
 {% block title_block %}
-     <h1> Simulator  </h1>
+             <h1> Simulator  </h1>
 {% endblock %}
 
-
-        
       
 {% block body_block  %}
-<div style="text-align: center; width: 500px;height:200px; display: table;border: green solid 1px;">  
+              <div style="text-align: center; width: 500px;height:200px; display: table;border: green solid 1px;">  
         
- <span style="display: table-cell; vertical-align: middle; ">
-        
-        <img width="1200px" height="400px" src="{{ MEDIA_URL }}simulator.jpg" alt="Stock of company" style="display: inline-block;"/>
-        
- </span>
-         
+                     <span style="display: table-cell; vertical-align: middle; ">
+                     <img width="1200px" height="400px" src="{{ MEDIA_URL }}simulator.jpg" alt="Stock of company" style="display: inline-block;"/>
+                     </span>
+              </div>
+
+        <div style="text-align: center; width: 1400px; border: rgb(127, 193, 219) solid 5px;">         
+                          <h1>What we should know before buy a stock</h1> 
         </div>
 
-        <div style="text-align: center; width: 1400px; border: rgb(127, 193, 219) solid 5px;">
-                   
-        <h1>What we should know before buy a stock</h1> 
-        </div>
-        <div style="width: 1200px; border: rgb(127, 193, 219) solid 5px;">
-       <h2>Step 1： Read stock trading chart</h2>
-       <h4>  <li>1:  The company name  that the stock belonging to </li> </h4>
-       <h4> <li> 2:  Real-time price of each share </li> </h4> 
-       <h4> <li> 3:  A stock's volume refers to the number of shares that are sold, or traded, over a certain period of time (usually daily)  </li> </h4>
-       <h4><li> 4:  The highest price at which the security has traded during the current trading day. </li> </h4> 
-       <h4>  <li>5:  The lowest price that a security has traded at during the day </li> </h4>
-       <h4><li> 6:  The total dollar market value of a company's outstanding shares of stock  </li> </h4>
-       <h4><li> 7 & 9: The 52-week high/low is the highest and lowest price at which a security has traded
-        during the time period that equates to one year and is viewed as a technical indicator. The 52-week 
-        high/low is based on the daily closing price for the security.  </li> </h4>
-        <h4> <li>8:  The bid price refers to the highest price a buyer will pay for a security. The ask price refers to the lowest price a seller will accept for a security. The difference between these two prices is known as the spread; the smaller the spread, the greater the liquidity of the given security. </li> </h4> 
-        <h4>  <li>10: Stock trend chart for one year.You can more intuitively see the price trend of this stock in the past year and judge the reasonable fluctuation range of this stock</li> </h4> 
-</div>
-       <div style="width: 1200px; border: rgb(70, 158, 192) solid 5px;">
-        <h2>Step 2：Some terms about buying and selling stock</h2>
-        <h4> <li> 1.Terms of action：  </li> </h4>
-        <h4>   <li>  Buy and Sell： the ability to make money on stocks involves two key decisions: buying at the right time and selling at the right time. To make a profit, you have to execute both of these decisions correctly.</li> </h4>
-                     
-        <h4>   <li>   Short：opening a position by borrowing shares that you don't own and then selling them to another investor. Shorting, or selling short, is a bearish stock position -- in other words, you might short a stock if you feel strongly that its share price was going to decline</li> </h4>
-        <h4>    <li> Buy to Cover： Buy to cover refers to a buy order made on a stock or other listed security to close out an existing short position. A short sale involves selling shares of a company that an investor does not own, as the shares are borrowed from a broker but need to be repaid at some point. </li> </h4>
+       <div style="width: 1200px; border: rgb(127, 193, 219) solid 5px;">
+                      <h2>Step 1： Read stock trading chart</h2>
+                      <h4>  <li>1:  The company name  that the stock belonging to </li> </h4>
+                      <h4> <li> 2:  Real-time price of each share </li> </h4> 
+                      <h4> <li> 3:  A stock's volume refers to the number of shares that are sold, or traded, over a certain period of time (usually daily)  </li> </h4>
+                      <h4><li> 4:  The highest price at which the security has traded during the current trading day. </li> </h4> 
+                      <h4>  <li>5:  The lowest price that a security has traded at during the day </li> </h4>
+                      <h4><li> 6:  The total dollar market value of a company's outstanding shares of stock  </li> </h4>
+                      <h4><li> 7 & 9: The 52-week high/low is the highest and lowest price at which a security has traded
+                     during the time period that equates to one year and is viewed as a technical indicator. The 52-week 
+                     high/low is based on the daily closing price for the security.  </li> </h4>
+                      <h4><li>8:  The bid price refers to the highest price a buyer will pay for a security. The ask price refers to the lowest price a seller will accept for a security. The difference between these two prices is known as the spread; the smaller the spread, the greater the liquidity of the given security. </li> </h4> 
+                      <h4> <li>10: Stock trend chart for one year.You can more intuitively see the price trend of this stock in the past year and judge the reasonable fluctuation range of this stock</li> </h4> 
        </div>
        <div style="width: 1200px; border: rgb(70, 158, 192) solid 5px;">
-              <h2>Step 3：Learn the latest news</h2>
-              
-                        
-              <h4> <li> Get the latest information through the news or judge the appreciation space by the financial statements of the company to which the stock belongs to </li></h4>
-        
-        
+                     <h2>Step 2：Some terms about buying and selling stock</h2>
+                     <h4> <li> 1.Terms of action：  </li> </h4>
+                     <h4> <li>  Buy and Sell： the ability to make money on stocks involves two key decisions: buying at the right time and selling at the right time. To make a profit, you have to execute both of these decisions correctly.</li> </h4>
+                     <h4> <li>   Short：opening a position by borrowing shares that you don't own and then selling them to another investor. Shorting, or selling short, is a bearish stock position -- in other words, you might short a stock if you feel strongly that its share price was going to decline</li> </h4>
+                     <h4> <li> Buy to Cover： Buy to cover refers to a buy order made on a stock or other listed security to close out an existing short position. A short sale involves selling shares of a company that an investor does not own, as the shares are borrowed from a broker but need to be repaid at some point. </li> </h4>
+       </div>
 
+       <div style="width: 1200px; border: rgb(70, 158, 192) solid 5px;">
+              <h2>Step 3：Learn the latest news</h2>   
+              <h4> <li> Get the latest information through the news or judge the appreciation space by the financial statements of the company to which the stock belongs to </li></h4>
 
 {% endblock %}

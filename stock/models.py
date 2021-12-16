@@ -44,7 +44,7 @@ class UserProfile(models.Model):
 
 # comment model     
 class Comment(models.Model):
-    #category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     username = models.CharField(max_length=12)
     content = models.CharField(max_length=128)
     posttime = models.DateTimeField(default = datetime.now())

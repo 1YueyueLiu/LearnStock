@@ -5,77 +5,60 @@
 <head>
     <title>LearnStock</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-    body {
-      margin: 0;
-    }
-    
-    .header {
-      background-color: #e5e8eb;
-      padding: 15px;
-      text-align: center;
-    }
-    .topnav {
-      overflow: hidden;
-      background-color: rgb(36, 32, 37);
-    }
-    .topnav a {
-      float: left;
-      display: block;
-      color: #f2f2f2;
-      text-align: center;
-      padding: 25px 20px;
-      text-decoration: none;
-    }
-    .topnav a:hover {
-      background-color: #ddd;
-      color: black;
-    }
- 
-  
+       <style>
+           body {
+            margin: 0;
+           }
+          .header {
+            background-color: #e5e8eb;
+            padding: 15px;
+            text-align: center;
+           }
+          .topnav {
+           overflow: hidden;
+           background-color: rgb(36, 32, 37);
+           }
+          .topnav a {
+           float: left;
+           display: block;
+           color: #f2f2f2;
+           text-align: center;
+           padding: 25px 20px;
+           text-decoration: none;
+           }
+          .topnav a:hover {
+           background-color: #ddd;
+           color: black;
+           } 
+       </style>
+</head>
 
-    
-    </style>
-
-    </head>
-
-    <body>
-    
+<body>
     <div class="header">
-      <h1>LearnStock</h1>
-
+          <h1>LearnStock</h1>
     </div>
 
-    
     <div class="topnav">
-     
-      <a href="{% url 'index' %}">Home</a>
+        <a href="{% url 'index' %}">Home</a>
         <a href="{% url 'stock:about' %}">About</a>
-        <a  href="{% url 'stock:News' %}">News</a></li>
-        
-      
+        <a  href="{% url 'stock:News' %}">News</a>
       {% if user.is_authenticated %}
-      
-      <a href="{% url 'stock:restricted' %}">Simulator</a>
-      <a class="nav-link" href="{% url 'stock:profile' user.username %}">Profile</a>
-      <a href="{% url 'auth_password_change' %}">Change Your Password</a>
-      <a class="nav-link px-lg-3 py-3 py-lg-4">Dear {{ user.username }},hello~</a>
-      <a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'auth_logout' %}?next={% url 'index'%}">Logout</a>
-        </li>
+        <a href="{% url 'stock:restricted' %}">Simulator</a>
+        <a class="nav-link" href="{% url 'stock:profile' user.username %}">Profile</a>
+        <a href="{% url 'auth_password_change' %}">Change Your Password</a>
+        <a class="nav-link px-lg-3 py-3 py-lg-4">Dear {{ user.username }},hello~</a>
+        <a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'auth_logout' %}?next={% url 'index'%}">Logout</a>
       {% else %}
         <a href="{% url 'registration_register' %}">Sign Up</a>
         <a href="{% url 'auth_login' %}">Login</a>
-      {% endif %}
-        
-</div>
-
-<div>
+      {% endif %}    
+    </div>
+ 
+    <div>
     {% block body_block %}
     {% endblock %}
+    </div>
 
-</div>
-
-
-</body>
-</html>
+ </body>
+ </html>
 

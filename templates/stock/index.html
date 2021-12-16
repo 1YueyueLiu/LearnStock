@@ -11,8 +11,6 @@
                 <div class="page-heading">
                     <h1>LearnStock</h1>
                     <span class="subheading">This is the best application for studying stock</span>
-                    
-                       
                 </div>
             </div>
         </div>
@@ -24,49 +22,34 @@
 <main class="mb-4">
     <div class="container px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
-            <div class="col-md-10 col-lg-8 col-xl-7">
-                
-               
-                  
-                   <div class="blog-post">
+            <div class="col-md-10 col-lg-8 col-xl-7">                  
+                   
                     <h2 class="blog-post-title">Top 5 Most Liked Stock Category</h2>
                     <div class="p-3">
-                         <h4 class="font-italic"></h4>
-                         
-                         <ol class="list-unstyled mb-0">
-                           
-                         </ol>
-                      {% if categories %}
+                        {% if categories %}
                        <ul>
-                      {% for category in categories %}
-                      <li> 
-                         <a href="/stock/category/{{ category.slug }}">{{category.name }}</a>
-                      </li>
-                   {% endfor %}
-                </ul>
-                {% else %}
-                    <strong> There are no stock categories present.</strong>
-               {% endif %}
-                </div>
+                            {% for category in categories %}
+                          <li><a href="/stock/category/{{ category.slug }}">{{category.name }}</a></li>
+                            {% endfor %}
+                       </ul>
+                      {% else %}
+                               <strong> There are no stock categories present.</strong>
+                      {% endif %}
+                    </div>
           
-                <div>
-                     <h2>Top 4 Most Viewed Stock News </h2>
-                {% if pages %}
-                     <ul>
+                    <div>
+                                <h2>Top 4 Most Viewed Stock News </h2>
+                        {% if pages %}
+                       <ul>
                          {% for page in pages %}
                              <li><a href="{{ page.url }}">{{ page.title }}</a></li>
                          {% endfor %}
-                     </ul>
-                 {% else %} 
-                          <strong>There are no News post currently.</strong>  
-          
-                          
-                 {% endif %} 
-                
-            
+                       </ul>
+                        {% else %} 
+                          <strong>There are no News post currently.</strong>   
+                        {% endif %} 
+                    </div>    
             </div>
-        </div>
-    </div>
 </main>
 {% endblock %}
  

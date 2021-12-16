@@ -3,17 +3,17 @@
         {% for c in categories %} 
              {% if c == current_category %}
              <li>
-             <strong>
-                 <a href="{% url 'stock:show_category' c.slug %}">{{ c.name }}</a>
-             </strong>
+               <strong>
+                  <a href="{% url 'stock:show_category' c.slug %}">{{ c.name }}</a>
+               </strong>
             </li>
             {% else %}
-             <li>
+            <li>
                  <a href="{% url 'stock:show_category' c.slug %}">{{ c.name }}</a>
-             </li>
-             {% endif %}
+            </li>
+            {% endif %}
         {% endfor %} 
-    {% else %}
+   {% else %}
             <li><strong>There are no categories present.</strong></li>
-    {% endif %}
+   {% endif %}
 </ul>

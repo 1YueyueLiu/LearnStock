@@ -1,42 +1,41 @@
 {%extends 'stock/base2.html'%} 
 {%load staticfiles%}
 
-<style>
-.demo{
-
-    background-color: rgba(255,255,255,0.5);
-}
-
+    <style>
+     .demo{   
+          background-color: rgba(255,255,255,0.5);
+          }
     </style>
 
 {%  block body_block %}
-
 <div style="background-color:blanchedalmond; text-align: center; width: 1350px; border: rgb(127, 193, 219) solid 5px;">
-    <h2>The Category of All News</h2>
-{% if categories %}
-    {% for c in categories %}
-        {% if c == current_category %}
-         <div style="margin:0;text-align: center;  position:fixed; width: 300px; height:50px; border: rgb(217, 223, 186) solid 1px;">
-         <li class="nav-item">
+                                 <h2>The Category of All News</h2>
+                 {% if categories %}
+                 {% for c in categories %}
+                 {% if c == current_category %}
+    <div style="margin:0;text-align: center;  position:fixed; width: 300px; height:50px; border: rgb(217, 223, 186) solid 1px;">
+            <li class="nav-item">
             <a  class="nav-link active" href="{% url 'stock:show_category' c.slug %}">
-                <span data-feather="archive"></span>
-              {{ c.name }}
+                      <span data-feather="archive"></span>
+                                {{ c.name }}
             </a>
             </li>
-         </div>
-        {% else %}
-        <div style="margin:auto;text-align: center; width: 300px; height:50px; border: rgb(211, 224, 195) solid 1px;">
+    </div>
+
+    {% else %}
+
+    <div style="margin:auto;text-align: center; width: 300px; height:50px; border: rgb(211, 224, 195) solid 1px;">
             <li class="nav-item">
             <a style="font-size:x-large; font-style: oblique; " class="nav-link" href="{% url 'stock:show_category' c.slug %}">
-                <span data-feather="archive"></span>
-                {{ c.name }}
+                       <span data-feather="archive"></span>
+                                  {{ c.name }}
             </a>
             </li>
-        </div>
-        {% endif %}
+    </div>
+    {% endif %}
     {% endfor %}
 {% else %}
-    <li class="nav-item">There are no categories present.</li>
+                        <li class="nav-item">There are no categories present.</li>
 {% endif %}
 </div>
 
