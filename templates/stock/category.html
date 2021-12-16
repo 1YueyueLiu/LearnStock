@@ -23,14 +23,14 @@
             {% if pages %}
             <ul >
                {% for page in pages %}
-               <h3> 
+               <h4> 
                    <li>
                     <a href="{% url 'stock:goto' %}?page_id={{ page.id }}">{{ page.title }}</a>
                     <!--if page.views>0,it will show the number of views-->
                           {% if page.views > 0 %}
                              <a> views:{{page.views }}</a>  
                     </li>
-               </h3>
+               </h4>
                            {% endif %}
             {% endfor %}
            
