@@ -37,7 +37,7 @@ step 4:Set up the database
         python populate_simulator.py
         python manage.py createsuperuser
         
- 4. the construction of code
+4. the construction of code
     LearnStock
          __int__.py
          settings.py
