@@ -70,7 +70,8 @@ step 4:Set up the database
      
  5.The demo of application
  
- https://www.youtube.com/watch?v=n-XjoWe1pAw&t=27s
+https://youtu.be/n-XjoWe1pAw!
+
       
          
      
