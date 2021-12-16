@@ -29,11 +29,52 @@ step 2: Install all the required packages(could using "requirement.txt")
       pip install requests==2.26.0
       
 step 3:Enter the virtual environment and git the code from
+       https://github.com/1YueyueLiu/LearnStock.git
        
 step 4:Set up the database
         python manage.py makemigrations stock
         python manage.py migrate
         python populate_simulator.py
         python manage.py createsuperuser
+        
+ 4. the construction of code
+    LearnStock
+         __int__.py
+         settings.py
+         urls.py
+         wsgi.py
+    media
+        profile_images
+    static
+        assets
+        css
+        images
+        js
+    stock
+         migrations
+         templatetags
+         __int__.py
+         admin.py
+         apps.py
+         .....
+         urls.py
+         views.py
+     templates
+         registrations
+         stock
+     .gitignore
+     db.sqlite3
+     manage.py
+     populate_simulator.py
+     requirements.txt
+     
+ 5.The demo of application
+ 
+ https://www.youtube.com/watch?v=n-XjoWe1pAw&t=27s
+      
+         
+     
+         
+    
        
       
